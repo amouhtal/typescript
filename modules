@@ -1,0 +1,209 @@
+// npx -p typescript tsc index.ts
+
+import { Interface } from "readline"
+
+// basic types
+{
+	let id: number = 5
+
+	let company: string = "Traversy Media"
+
+	let isPublished: boolean = true
+
+	let x: any = 'hello'
+
+	x = true
+}
+
+// Arrays & Tuples
+{
+	// arrays
+	let ids: number[] = [1,2,3,4,5]
+	ids.push(6);
+
+	// tuple 
+	let person: [number, string, boolean] = [1, 'brad', true]
+
+	//tuple array
+
+	let employee = [
+		[1, 'brad'],
+		[2, 'john'],
+		[3, 'jill']
+	]
+}
+
+// Union
+{
+	let id: string | number
+
+	id = 10;
+	id = "teen"
+	
+	
+	
+}
+
+//Enum
+{
+	enum Direction1{
+		Up,
+		Down,
+		Left,
+		Right
+	}
+
+	enum Direction2{
+		Up = "Up",
+		Down = "Down",
+		Left = "Left",
+		Right = "Right"
+	}
+
+	console.log("Direction1.Up")
+
+	console.log(Direction2.Right)
+}
+// Object With Interfaces
+{
+	interface UserInterface {
+		id: number
+		name: string
+		age?: number
+	}
+
+	const user: UserInterface = {
+		id: 1,
+		name: 'Jhon'
+	}
+}
+
+// Object With Type
+{
+	type User = {
+		id: number
+		name: string
+	}
+
+	const user: User = {
+		id: 1,
+		name: 'Jhon',
+	}
+
+// object Sahel
+	const user3 = {
+		id: 1,
+		name: 'Jhon',
+	}
+}
+
+// Type Assertion
+{
+	let cid: any = 1
+
+	let customerId = cid as number
+}
+
+// Function 
+
+{
+	// function addNum(x: number, y: number): number{
+	// 	return x + y;
+	// }
+
+	// console.log(addNum(1330, 7));
+
+	// function log(message: string | number) : void
+	// {
+	// 	console.log(message)
+	// }
+
+	// log("print message")
+}
+
+
+// Function Interfaces
+{
+	interface MathFunc{
+		(x: number, y: number): number
+	}
+
+	const add: MathFunc = (x: number,y:number): number => x + y
+	const sub: MathFunc = (x: number,y:number): number => x - y
+
+	console.log(add(50, 5));
+}
+
+// Classes
+{
+	interface personInterface {
+		id: number
+		name: string
+		register(): string
+	}
+
+	class Person implements personInterface{
+		id:number
+		name6: string
+		name: string
+		
+		// constructor() {
+		// 	console.log("Person Default Constructor Called")
+		// }
+		
+		constructor(_id: number, _name : string) {
+			this.id = _id
+			this.name = _name
+			console.log(this.id, " ", this.name)
+		}
+
+		register() {
+			return `${this.name} id : ${this.id} is now registered`
+		}
+	}
+	const brad = new Person(20, "Brad Traversy")
+
+	console.log(brad.register());
+}
+
+// Extending Classes (Subclasses)
+{
+	class Person {
+		private id:number
+		private name: string
+		
+		constructor(_id: number, _name : string) {
+			this.id = _id
+			this.name = _name
+		}
+
+		register() {
+			return `${this.name} is now registered`
+		}
+	}
+
+	class Employee extends Person{
+		private position: string 
+
+		constructor(id: number, name: string, position: string)
+		{
+			super(id, name)
+			this.position = position
+		}
+	}
+
+	const emp = new Employee(3, 'Shawn', 'Developer')
+	console.log(emp.register());
+}
+
+// Generics
+{
+	function getArray<T>(items: T[]): T[]{
+		return new Array().concat(items)
+	}
+
+	let numArray = getArray<number>([1,2,3,4])
+	let strArray = getArray<string>(['brad', 'Jhon', 'Jill'])
+
+	numArray.push(5)
+}
