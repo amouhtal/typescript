@@ -4,7 +4,7 @@ import { User } from './interface/user';
 
 @Injectable()
 export class UserService {
-	public users: User [];
+	public users: User [] = [];
 
 	getUsers(): User [] {
 		return this.users;

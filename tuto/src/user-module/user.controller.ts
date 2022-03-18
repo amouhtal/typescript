@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete, ValidationPipe, UsePipes, ParseIntPipe, Query, ParseBoolPipe } from '@nestjs/common';
+import { UserDto, UserParamsDto } from './dto/user.dto';
 import { User } from './interface/user';
 import { UserService } from './user.service';
 
@@ -7,20 +8,26 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   // HTTP GET /user
   @Get()
-  getUsers(): User[] {
+  getUsers(
+    @Param('id', ParseIntPipe) id : number,
+    @Query('sort', ParseBoolPipe) sort : boolean,
+    @Body() data: UserDto
+  ): User[] {
 	//	console.log("log :" );
 
     return this.userService.getUsers();
   }
 
   @Get('/:email')
-  getUser(@Param('email') email : string): User {
+  getUser(@Param() params : UserParamsDto): User {
 		//console.log("log :", email );
 
-    return this.userService.getUser(email);
+    return this.userService.getUser(params.email);
   }
+  
   @Post()
-  postUser(@Body() user: User):User {
+  @UsePipes(new ValidationPipe())
+  postUser(@Body() user: UserDto):User {
 
 		// console.log("log : " ,user.username);
 		// console.log("log : " ,user.email);
@@ -29,7 +36,7 @@ export class UserController {
   }
 
   @Delete('/:email')
-  deleteUser(@Param('email') email: string) :User [] {
-    return this.userService.deleteUser(email);
+  deleteUser(@Param() params: UserParamsDto) :User [] {
+    return this.userService.deleteUser(params.email);
   }
 }
